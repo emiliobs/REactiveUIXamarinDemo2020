@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:REactiveUIXamarinDemo2020.ViewModels"
+             mc:Ignorable="d"
+             x:Class="REactiveUIXamarinDemo2020.Pages.ColorsDemoPage"
+             BindingContext="{StaticResource colorsDemoViewModel }"
+             Title="Color Demo Page!">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:ColorsDemoViewModels x:Key="colorsDemoViewModel"></vm:ColorsDemoViewModels>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Red" Margin="3"></Label>
+            <Slider Minimum="0" Maximum="255" Value="{Binding Red, Mode=TwoWay}" Margin="3"></Slider>
+
+            <Label Text="Green" Margin="3"></Label>
+            <Slider Minimum="0" Maximum="255" Value="{Binding Green, Mode=TwoWay}" Margin="3"></Slider>
+
+            <Label Text="Blue" Margin="3"></Label>
+            <Slider Minimum="0" Maximum="255" Value="{Binding Blue, Mode=TwoWay}" Margin="3"></Slider>
+
+            <BoxView VerticalOptions="FillAndExpand" Margin="10" BackgroundColor="{Binding BackgroundColor, Mode=TwoWay}"></BoxView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

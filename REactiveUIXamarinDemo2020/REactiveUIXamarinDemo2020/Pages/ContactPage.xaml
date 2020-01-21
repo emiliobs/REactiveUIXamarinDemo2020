@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:REactiveUIXamarinDemo2020.ViewModels"
+             mc:Ignorable="d"
+             x:Class="REactiveUIXamarinDemo2020.Pages.ContactPage"
+             Title="Contacts"
+             BindingContext="{StaticResource contactViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:ContactViewModel x:Key="contactViewModel"></vm:ContactViewModel>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="5" Margin="10">
+            <Entry Margin="3" Placeholder="Search....." Text="{Binding SearchQuery}"></Entry>
+            <ListView HasUnevenRows="True" ItemsSource="{Binding Contacts}" Margin="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="5" Margin="2" Padding="4">
+                                <StackLayout>
+                                    <Label HorizontalOptions="Center" Text="{Binding FullaName}" FontSize="Large" TextColor="Black"></Label>
+                                    <Label HorizontalOptions="Center" Text="{Binding Phone}" FontSize="Medium" TextColor="DarkGray"></Label>
+                                    <Label HorizontalOptions="Center" Text="{Binding Email}" FontSize="Small" TextColor="Gray"></Label>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

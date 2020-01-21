@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:REactiveUIXamarinDemo2020"
+             xmlns:converter="clr-namespace:REactiveUIXamarinDemo2020.Converter"
+             mc:Ignorable="d"
+             x:Class="REactiveUIXamarinDemo2020.MainPage"
+             BindingContext="{StaticResource loginViewModel}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:LoginViewModel x:Key="loginViewModel"></vm:LoginViewModel>
+            <converter:StringToColorConverter x:Key="stringColorConverter"></converter:StringToColorConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+
+        <!--<Slider x:Name="slider" Minimum="0" Maximum="10" Margin="22"></Slider>
+        <Entry Margin="12" Text="{Binding Path=Value, Mode=TwoWay}" BindingContext="{x:Reference slider}"></Entry>-->
+        <Entry Margin="2" Text="{Binding UserName, Mode=TwoWay}"></Entry>
+        <Label TextColor="{Binding UserName, Converter={StaticResource stringColorConverter}}" Text="{Binding UserName, Mode=OneWay}" Margin="2"></Label>
+    </StackLayout>
+
+</ContentPage>
