@@ -16,6 +16,7 @@ namespace REactiveUIXamarinDemo2020.ViewModels
         private List<Contact> _samples = new List<Contact>()
         {
            new Contact{ FullaName = "Emilio Barrera", Email = "emilio@gmail.com", Phone= "555555" },
+           new Contact{ FullaName = "Emilia Barrera", Email = "emilio@gmail.com", Phone= "555555" },
            new Contact{ FullaName = "Carla Suarez", Email = "carla@gmail.com", Phone= "8951231.20" },
            new Contact{ FullaName = "Nelson Madela", Email = "nelso@gmail.com", Phone= "53248" },
            new Contact{ FullaName = "Lina Hermosa", Email = "lina@gmail.com", Phone= "545478531" },
@@ -30,12 +31,29 @@ namespace REactiveUIXamarinDemo2020.ViewModels
                 .Throttle(TimeSpan.FromSeconds(1))
                 .Subscribe(query =>
                 {
-                    var filteredContacts = _samples.Where(c => c.FullaName.ToLower().Contains(query) || 
-                                            c.Phone.Contains(query) || 
+                    var filteredContacts = _samples.Where(c => c.FullaName.ToLower().Contains(query) ||
+                                            c.Phone.Contains(query) ||
                                             c.Email.Contains(query)).ToList();
 
                     Contacts = new ObservableCollection<Contact>(filteredContacts);
                 });
+
+            this.WhenAnyValue(vm => vm.Contacts)
+                 .Select(conacts =>
+                 {
+                     if (Contacts.Count == _samples.Count)
+                     {
+
+                         return "No filters applied";
+                     }
+                     else
+                     {
+                         return $"{Contacts.Count} have been found in result for '{SearchQuery}'";
+
+                     }
+
+                 })
+                 .ToProperty(this, vm => vm.SearchResult, out _searchResult);
         }
 
 
@@ -48,6 +66,12 @@ namespace REactiveUIXamarinDemo2020.ViewModels
             get { return _searchQuery; }
             set { this.RaiseAndSetIfChanged(ref _searchQuery, value); }
         }
+
+        private readonly ObservableAsPropertyHelper<string> _searchResult;
+
+        public string SearchResult => _searchResult.Value;
+
+
 
         private ObservableCollection<Contact> _contacts;
 
