@@ -6,13 +6,8 @@
              xmlns:vm="clr-namespace:REactiveUIXamarinDemo2020.ViewModels"
              mc:Ignorable="d"
              x:Class="REactiveUIXamarinDemo2020.Pages.ContactPage"
-             Title="Contacts"
-             BindingContext="{StaticResource contactViewModel}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <vm:ContactViewModel x:Key="contactViewModel"></vm:ContactViewModel>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             Title="Contacts">
+   
     
     <ContentPage.Content>
         <StackLayout Spacing="5" Margin="10">

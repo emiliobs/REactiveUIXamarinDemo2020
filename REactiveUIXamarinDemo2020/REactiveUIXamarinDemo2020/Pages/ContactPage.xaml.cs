@@ -1,4 +1,5 @@
-﻿using System;
+﻿using REactiveUIXamarinDemo2020.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace REactiveUIXamarinDemo2020.Pages
         public ContactPage()
         {
             InitializeComponent();
+            BindingContext = new ContactViewModel();
         }
     }
 }

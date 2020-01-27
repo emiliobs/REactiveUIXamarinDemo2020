@@ -11,6 +11,8 @@ namespace REactiveUIXamarinDemo2020
         {
             InitializeComponent();
 
+            new AppBootsTrapper();
+
             //MainPage = new MainPage();
            // MainPage = new NavigationPage(new ColorsDemoPage());
             MainPage = new NavigationPage(new ContactPage());

@@ -1,7 +1,7 @@
 ﻿using ReactiveUI;
 using REactiveUIXamarinDemo2020.Models;
+using REactiveUIXamarinDemo2020.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
@@ -10,52 +10,36 @@ namespace REactiveUIXamarinDemo2020.ViewModels
 {
     public class ContactViewModel : ReactiveObject
     {
+        private IContactsServices _contactsService;
 
-
-
-        private List<Contact> _samples = new List<Contact>()
+        public ContactViewModel(IContactsServices contactsService = null)
         {
-           new Contact{ FullaName = "Emilio Barrera", Email = "emilio@gmail.com", Phone= "555555" },
-           new Contact{ FullaName = "Emilia Barrera", Email = "emilio@gmail.com", Phone= "555555" },
-           new Contact{ FullaName = "Carla Suarez", Email = "carla@gmail.com", Phone= "8951231.20" },
-           new Contact{ FullaName = "Nelson Madela", Email = "nelso@gmail.com", Phone= "53248" },
-           new Contact{ FullaName = "Lina Hermosa", Email = "lina@gmail.com", Phone= "545478531" },
-           new Contact{ FullaName = "Charlene Body", Email = "charlene@gmail.com", Phone= "4543132" },
-        };
+            _contactsService = contactsService ?? (IContactsServices)Splat.Locator.Current.GetService(typeof(IContactsServices));
 
-        public ContactViewModel()
-        {
-            Contacts = new ObservableCollection<Contact>(_samples);
+            var allContacts = _contactsService.GetAllContacts();
+            _contacts = new ObservableCollection<Contact>(allContacts);
 
             this.WhenAnyValue(vm => vm.SearchQuery)
                 .Throttle(TimeSpan.FromSeconds(1))
                 .Subscribe(query =>
                 {
-                    var filteredContacts = _samples.Where(c => c.FullaName.ToLower().Contains(query) ||
-                                            c.Phone.Contains(query) ||
-                                            c.Email.Contains(query)).ToList();
+                    var filteredContacts = allContacts.Where(c => c.FullaName.ToLower().Contains(query) || c.Phone.Contains(query) || c.Email.Contains(query)).ToList();
 
                     Contacts = new ObservableCollection<Contact>(filteredContacts);
                 });
 
             this.WhenAnyValue(vm => vm.Contacts)
-                 .Select(conacts =>
-                 {
-                     if (Contacts.Count == _samples.Count)
-                     {
+                .Select(conacts =>
+                {
+                    if (Contacts.Count == allContacts.Count())
+                        return "No filters applied";
 
-                         return "No filters applied";
-                     }
-                     else
-                     {
-                         return $"{Contacts.Count} have been found in result for '{SearchQuery}'";
+                    return $"{Contacts.Count} have been found in result for '{SearchQuery}'";
+                })
+                .ToProperty(this, vm => vm.SearchResult, out _searchResult);
 
-                     }
-
-                 })
-                 .ToProperty(this, vm => vm.SearchResult, out _searchResult);
+            //ClearCommand = ReactiveCommand.Create(ClearSearch);
         }
-
 
         #region Properties
 
