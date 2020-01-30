@@ -41,7 +41,20 @@ namespace REactiveUIXamarinDemo2020.ViewModels
                 })
                 .ToProperty(this, vm => vm.SearchResult, out _searchResult);
 
-            ClearCommand = ReactiveCommand.Create(ClearSearch);
+            var canExecuteClear = this.WhenAnyValue(vm => vm.SearchQuery).Select(query => {
+
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+
+            });
+
+            ClearCommand = ReactiveCommand.Create(ClearSearch, canExecuteClear);
             //Han dle the exception
             ClearCommand.ThrownExceptions.Subscribe(ex => 
             {
