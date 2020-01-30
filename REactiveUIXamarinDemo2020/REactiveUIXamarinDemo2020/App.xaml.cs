@@ -16,6 +16,7 @@ namespace REactiveUIXamarinDemo2020
             //MainPage = new MainPage();
            // MainPage = new NavigationPage(new ColorsDemoPage());
             MainPage = new NavigationPage(new ContactPage());
+            MainPage = new NavigationPage(new  CommadBindPage());
         }
 
         protected override void OnStart()
