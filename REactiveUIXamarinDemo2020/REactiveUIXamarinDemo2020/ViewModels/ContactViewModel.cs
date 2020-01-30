@@ -3,7 +3,9 @@ using REactiveUIXamarinDemo2020.Models;
 using REactiveUIXamarinDemo2020.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
 
@@ -40,6 +42,11 @@ namespace REactiveUIXamarinDemo2020.ViewModels
                 .ToProperty(this, vm => vm.SearchResult, out _searchResult);
 
             ClearCommand = ReactiveCommand.Create(ClearSearch);
+            //Han dle the exception
+            ClearCommand.ThrownExceptions.Subscribe(ex => 
+            {
+                Debug.WriteLine(ex.Message);
+            });
         }
 
         #region Properties
@@ -72,14 +79,16 @@ namespace REactiveUIXamarinDemo2020.ViewModels
 
         #region Commands
 
-        public ICommand ClearCommand { get; }
+        public ReactiveCommand<Unit, Unit> ClearCommand { get; }
 
         #endregion
 
         #region MEthods
         private void ClearSearch()
         {
-            SearchQuery = string.Empty;
+            throw new Exception("This is an Example");
+
+            //SearchQuery = string.Empty;
         }
         #endregion
 
