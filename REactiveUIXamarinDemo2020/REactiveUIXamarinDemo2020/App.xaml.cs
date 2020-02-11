@@ -11,12 +11,14 @@ namespace REactiveUIXamarinDemo2020
         {
             InitializeComponent();
 
-            new AppBootsTrapper();
+           var bootstraper = new AppBootsTrapper();
 
             //MainPage = new MainPage();
-           // MainPage = new NavigationPage(new ColorsDemoPage());
-            MainPage = new NavigationPage(new ContactPage());
-            MainPage = new NavigationPage(new  CommadBindPage());
+            // MainPage = new NavigationPage(new ColorsDemoPage());
+            //MainPage = new NavigationPage(new ContactPage());
+            //MainPage = new NavigationPage(new  CommadBindPage());
+            //MainPage = new NavigationPage(new ValidationDemoPage());
+            MainPage = bootstraper.CreateMainPage();
         }
 
         protected override void OnStart()

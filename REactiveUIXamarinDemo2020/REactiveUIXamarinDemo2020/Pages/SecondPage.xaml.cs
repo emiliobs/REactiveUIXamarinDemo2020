@@ -13,15 +13,13 @@ using Xamarin.Forms.Xaml;
 namespace REactiveUIXamarinDemo2020.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CommadBindPage : ReactiveContentPage<CommandsBindViewModel>
+    public partial class SecondPage : ReactiveContentPage<SecondViewModel>
     {
-        public CommadBindPage()
+        public SecondPage()
         {
             InitializeComponent();
 
-            BindingContext = ViewModel = new CommandsBindViewModel();
-
-            this.BindCommand(ViewModel, vm => vm.TestCommand, page => page.slider, nameof(slider.ValueChanged));
+            BindingContext = ViewModel = new SecondViewModel(null);
         }
     }
 }
